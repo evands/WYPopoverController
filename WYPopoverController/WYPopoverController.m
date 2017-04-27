@@ -1576,7 +1576,7 @@ static WYPopoverTheme *defaultTheme_ = nil;
     theme.viewContentInsets = appearance.viewContentInsets;
     theme.overlayColor = appearance.overlayColor;
     theme.preferredAlpha = appearance.preferredAlpha;
-    _theme = theme;
+    self.theme = theme;
 
     themeIsUpdating = NO;
     themeUpdatesEnabled = YES;
