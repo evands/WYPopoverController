@@ -1635,7 +1635,7 @@ static WYPopoverTheme *defaultTheme_ = nil;
     return defaultTheme_;
 }
 
-+ (void)load
++ (void)initialize
 {
     [WYPopoverController setDefaultTheme:[WYPopoverTheme theme]];
 }
