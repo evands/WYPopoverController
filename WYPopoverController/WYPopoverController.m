@@ -843,6 +843,10 @@ static float edgeSizeFromCornerRadius(float cornerRadius) {
     self.layer.contentsScale = [UIScreen mainScreen].scale;
     //self.layer.edgeAntialiasingMask = kCALayerLeftEdge | kCALayerRightEdge | kCALayerBottomEdge | kCALayerTopEdge;
     self.layer.delegate = self;
+      
+    if (@available(iOS 11.0, *)) {
+      [self setAccessibilityIgnoresInvertColors:YES];
+    }
   }
 
   return self;
