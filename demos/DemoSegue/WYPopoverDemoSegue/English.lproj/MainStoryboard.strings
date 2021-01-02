@@ -1,0 +1,48 @@
+
+/* Class = "UILabel"; text = "Game"; ObjectID = "3lQ-zt-3lr"; */
+"3lQ-zt-3lr.text" = "Game";
+
+/* Class = "UITableViewSection"; headerTitle = "Player Name"; ObjectID = "3y9-e3-Snr"; */
+"3y9-e3-Snr.headerTitle" = "Player Name";
+
+/* Class = "UITabBarItem"; title = "Gestures"; ObjectID = "61W-YH-1Vo"; */
+"61W-YH-1Vo.title" = "Gestures";
+
+/* Class = "UINavigationItem"; title = "Add Player"; ObjectID = "76z-wG-xBy"; */
+"76z-wG-xBy.title" = "Add Player";
+
+/* Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "7LA-8I-H61"; */
+"7LA-8I-H61.title" = "Cancel";
+
+/* Class = "UILabel"; text = "Detail"; ObjectID = "9Ul-Fx-dRa"; */
+"9Ul-Fx-dRa.text" = "Detail";
+
+/* Class = "UINavigationItem"; title = "Players"; ObjectID = "CvV-Qc-taS"; */
+"CvV-Qc-taS.title" = "Players";
+
+/* Class = "UITabBarItem"; title = "Players"; ObjectID = "H5c-fn-HSm"; */
+"H5c-fn-HSm.title" = "Players";
+
+/* Class = "UIButton"; normalTitle = "popover"; ObjectID = "IkW-kR-gBw"; */
+"IkW-kR-gBw.normalTitle" = "popover";
+
+/* Class = "UILabel"; text = "Name"; ObjectID = "LPL-hb-cHT"; */
+"LPL-hb-cHT.text" = "Name";
+
+/* Class = "UILabel"; text = "My stadium"; ObjectID = "PIj-mm-nfO"; */
+"PIj-mm-nfO.text" = "My stadium";
+
+/* Class = "UIBarButtonItem"; title = "test"; ObjectID = "V8O-4E-8ns"; */
+"V8O-4E-8ns.title" = "test";
+
+/* Class = "UILabel"; text = "Stadium"; ObjectID = "eja-GI-8JD"; */
+"eja-GI-8JD.text" = "Stadium";
+
+/* Class = "UINavigationItem"; title = "Game"; ObjectID = "pdh-2E-Ds0"; */
+"pdh-2E-Ds0.title" = "Game";
+
+/* Class = "UILabel"; text = "Game"; ObjectID = "qj5-KN-aS5"; */
+"qj5-KN-aS5.text" = "Game";
+
+/* Class = "UILabel"; text = "empty view"; ObjectID = "yUQ-zL-g2t"; */
+"yUQ-zL-g2t.text" = "empty view";

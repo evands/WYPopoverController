@@ -57,6 +57,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		347C1ABC25A10E1400631A4C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		97B3CB3A17CDE8E50005E1A1 /* WYPopoverDemoSegue.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WYPopoverDemoSegue.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		97B3CB3D17CDE8E50005E1A1 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		97B3CB3F17CDE8E50005E1A1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -70,7 +71,6 @@
 		97B3CB4F17CDE8E50005E1A1 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		97B3CB5117CDE8E50005E1A1 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		97B3CB5317CDE8E50005E1A1 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		97B3CB5617CDE8E50005E1A1 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		97B3CB5B17CDE8E50005E1A1 /* WYViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WYViewController.h; sourceTree = "<group>"; };
 		97B3CB5C17CDE8E50005E1A1 /* WYViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WYViewController.m; sourceTree = "<group>"; };
 		97B3CB6417CF582D0005E1A1 /* 1Star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1Star.png; sourceTree = "<group>"; };
@@ -291,6 +291,7 @@
 			knownRegions = (
 				English,
 				en,
+				Base,
 			);
 			mainGroup = 97B3CB3117CDE8E50005E1A1;
 			productRefGroup = 97B3CB3B17CDE8E50005E1A1 /* Products */;
@@ -377,7 +378,7 @@
 		97B3CB5517CDE8E50005E1A1 /* MainStoryboard.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				97B3CB5617CDE8E50005E1A1 /* en */,
+				347C1ABC25A10E1400631A4C /* Base */,
 			);
 			name = MainStoryboard.storyboard;
 			sourceTree = "<group>";
@@ -410,7 +411,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -435,7 +436,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -446,11 +447,13 @@
 		97B3CB6117CDE8E50005E1A1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = BXN2WS3GLG;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "WYPopoverDemoSegue/WYPopoverDemoSegue-Prefix.pch";
 				INFOPLIST_FILE = "WYPopoverDemoSegue/WYPopoverDemoSegue-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				MARKETING_VERSION = 1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
@@ -460,11 +463,13 @@
 		97B3CB6217CDE8E50005E1A1 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = BXN2WS3GLG;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "WYPopoverDemoSegue/WYPopoverDemoSegue-Prefix.pch";
 				INFOPLIST_FILE = "WYPopoverDemoSegue/WYPopoverDemoSegue-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				MARKETING_VERSION = 1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
