@@ -191,17 +191,19 @@ static char const * const UINavigationControllerEmbedInPopoverTagKey = "UINaviga
 @dynamic wy_embedInPopover;
 
 + (void)load {
-  Method original, swizzle;
-
-  original = class_getInstanceMethod(self, @selector(pushViewController:animated:));
-  swizzle = class_getInstanceMethod(self, @selector(sizzled_pushViewController:animated:));
-
-  method_exchangeImplementations(original, swizzle);
-
-  original = class_getInstanceMethod(self, @selector(setViewControllers:animated:));
-  swizzle = class_getInstanceMethod(self, @selector(sizzled_setViewControllers:animated:));
-
-  method_exchangeImplementations(original, swizzle);
+    @autoreleasepool {
+        Method original, swizzle;
+        
+        original = class_getInstanceMethod(self, @selector(pushViewController:animated:));
+        swizzle = class_getInstanceMethod(self, @selector(sizzled_pushViewController:animated:));
+        
+        method_exchangeImplementations(original, swizzle);
+        
+        original = class_getInstanceMethod(self, @selector(setViewControllers:animated:));
+        swizzle = class_getInstanceMethod(self, @selector(sizzled_setViewControllers:animated:));
+        
+        method_exchangeImplementations(original, swizzle);
+    }
 }
 
 - (BOOL)wy_isEmbedInPopover {
@@ -667,7 +669,7 @@ static float edgeSizeFromCornerRadius(float cornerRadius) {
 
     UIBezierPath* inRoundedRectPath = [UIBezierPath bezierPathWithRoundedRect:CGRectInset(innerRect, 0.5, 0.5) cornerRadius:cornerRadius];
 
-    if (_borderWidth == 0) {
+    if ((fabs(_borderWidth) < FLT_EPSILON)) {
       inRoundedRectPath = [UIBezierPath bezierPathWithRoundedRect:CGRectInset(innerRect, 0.5, 0.5) byRoundingCorners:UIRectCornerBottomLeft|UIRectCornerBottomRight cornerRadii:CGSizeMake(cornerRadius, cornerRadius)];
     }
 
@@ -766,12 +768,6 @@ static float edgeSizeFromCornerRadius(float cornerRadius) {
  */
 - (void)drawRect:(CGRect)rect {}
 
-#pragma mark - UIAccessibility
-
-- (void)accessibilityElementDidBecomeFocused {
-  self.accessibilityLabel = NSLocalizedString(@"Double-tap to dismiss pop-up window.", nil);
-}
-
 @end
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -847,9 +843,19 @@ static float edgeSizeFromCornerRadius(float cornerRadius) {
     self.layer.contentsScale = [UIScreen mainScreen].scale;
     //self.layer.edgeAntialiasingMask = kCALayerLeftEdge | kCALayerRightEdge | kCALayerBottomEdge | kCALayerTopEdge;
     self.layer.delegate = self;
+      
   }
 
   return self;
+}
+
+//https://medium.com/@nguyenminhphuc/how-to-pass-ui-events-through-views-in-ios-c1be9ab1626b
+- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
+    UIView *view = [super hitTest:point withEvent:event];
+    if (view == self) {
+        return nil;
+    }
+    return view;
 }
 
 - (void)tapOut {
@@ -870,7 +876,7 @@ static float edgeSizeFromCornerRadius(float cornerRadius) {
 - (void)setArrowOffset:(float)value {
   float coef = 1;
 
-  if (value != 0) {
+  if (!(fabs(value) < FLT_EPSILON) ) {
     coef = value / ABS(value);
 
     value = ABS(value);
@@ -908,7 +914,6 @@ static float edgeSizeFromCornerRadius(float cornerRadius) {
   _contentView = viewController.view;
 
   _contentView.frame = CGRectIntegral(CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height));
-
   [self addSubview:_contentView];
 
   _navigationBarHeight = 0;
@@ -922,8 +927,6 @@ static float edgeSizeFromCornerRadius(float cornerRadius) {
 
   if (_innerView == nil) {
     _innerView = [[WYPopoverBackgroundInnerView alloc] initWithFrame:_contentView.frame];
-    _innerView.userInteractionEnabled = NO;
-
     _innerView.gradientTopColor = self.fillTopColor;
     _innerView.gradientBottomColor = self.fillBottomColor;
     _innerView.innerShadowColor = _innerShadowColor;
@@ -952,7 +955,7 @@ static float edgeSizeFromCornerRadius(float cornerRadius) {
   result.width += 2 * (_borderWidth + _outerShadowBlurRadius);
   result.height += _borderWidth + 2 * _outerShadowBlurRadius;
 
-  if (_navigationBarHeight == 0) {
+  if ((fabs(_navigationBarHeight) < FLT_EPSILON) ) {
     result.height += _borderWidth;
   }
 
@@ -1370,7 +1373,7 @@ static float edgeSizeFromCornerRadius(float cornerRadius) {
   result.size.width -= 2 * _borderWidth;
   result.size.height -= _borderWidth;
 
-  if (_navigationBarHeight == 0 || _wantsDefaultContentAppearance) {
+  if ((fabs(_navigationBarHeight) < FLT_EPSILON) || _wantsDefaultContentAppearance) {
     result.origin.y += _borderWidth;
     result.size.height -= _borderWidth;
   }
@@ -1547,12 +1550,15 @@ static WYPopoverTheme *defaultTheme_ = nil;
     _animationDuration = WY_POPOVER_DEFAULT_ANIMATION_DURATION;
 
     themeUpdatesEnabled = NO;
+<<<<<<< HEAD
 
+=======
+>>>>>>> caba7157c67cec7bf91bdc87537ec6206d5a4c2c
     themeIsUpdating = YES;
 
     WYPopoverBackgroundView *appearance = [WYPopoverBackgroundView appearance];
       
-    WYPopoverTheme* theme = [WYPopoverTheme theme];
+    WYPopoverTheme *theme = [WYPopoverTheme theme];
     theme.usesRoundedArrow = appearance.usesRoundedArrow;
     theme.dimsBackgroundViewsTintColor = appearance.dimsBackgroundViewsTintColor;
     theme.tintColor = appearance.tintColor;
@@ -1578,7 +1584,14 @@ static WYPopoverTheme *defaultTheme_ = nil;
     theme.viewContentInsets = appearance.viewContentInsets;
     theme.overlayColor = appearance.overlayColor;
     theme.preferredAlpha = appearance.preferredAlpha;
+<<<<<<< HEAD
     self.theme = theme;
+=======
+    
+    _theme = theme;
+      
+    [self registerTheme];
+>>>>>>> caba7157c67cec7bf91bdc87537ec6206d5a4c2c
 
     themeIsUpdating = NO;
     themeUpdatesEnabled = YES;
@@ -1816,11 +1829,17 @@ static WYPopoverTheme *defaultTheme_ = nil;
     _overlayView = [[WYPopoverOverlayView alloc] initWithFrame:_inView.window.bounds];
     _overlayView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     _overlayView.autoresizesSubviews = NO;
+    _overlayView.isAccessibilityElement = YES;
+    _overlayView.accessibilityHint = NSLocalizedString(@"Double-tap to dismiss popup window.", @"all");
+    _overlayView.accessibilityLabel = NSLocalizedString(@"Dismiss popup", @"all");
+    _overlayView.accessibilityTraits = UIAccessibilityTraitNone;
     _overlayView.delegate = self;
     _overlayView.passthroughViews = _passthroughViews;
 
     _backgroundView = [[WYPopoverBackgroundView alloc] initWithContentSize:contentViewSize];
     _backgroundView.appearing = YES;
+    _backgroundView.isAccessibilityElement = YES;
+    _backgroundView.accessibilityTraits = UIAccessibilityTraitNone;
 
     _backgroundView.delegate = self;
     _backgroundView.hidden = YES;
@@ -2468,8 +2487,8 @@ static WYPopoverTheme *defaultTheme_ = nil;
       [strongSelf->_delegate popoverControllerDidDismissPopover:strongSelf];
     }
 
-    if (self.dismissCompletionBlock) {
-      self.dismissCompletionBlock(strongSelf);
+    if (strongSelf.dismissCompletionBlock) {
+      strongSelf.dismissCompletionBlock(strongSelf);
     }
   };
 
