@@ -1861,8 +1861,8 @@ static WYPopoverTheme *defaultTheme_ = nil;
     __typeof__(self) strongSelf = weakSelf;
 
     if (strongSelf) {
-      if (_isObserverAdded == NO) {
-        _isObserverAdded = YES;
+      if (strongSelf->_isObserverAdded == NO) {
+		  strongSelf->_isObserverAdded = YES;
 
         if ([strongSelf->_viewController respondsToSelector:@selector(preferredContentSize)]) {
           [strongSelf->_viewController addObserver:self forKeyPath:NSStringFromSelector(@selector(preferredContentSize)) options:0 context:nil];
@@ -1880,11 +1880,13 @@ static WYPopoverTheme *defaultTheme_ = nil;
     }
   };
 
-  void (^adjustTintDimmed)() = ^() {
+  void (^adjustTintDimmed)(void) = ^() {
 #ifdef WY_BASE_SDK_7_ENABLED
-    if (_backgroundView.dimsBackgroundViewsTintColor && [_inView.window respondsToSelector:@selector(setTintAdjustmentMode:)]) {
-      for (UIView *subview in _inView.window.subviews) {
-        if (subview != _backgroundView) {
+	  __typeof__(self) strongSelf = weakSelf;
+
+    if (strongSelf->_backgroundView.dimsBackgroundViewsTintColor && [strongSelf->_inView.window respondsToSelector:@selector(setTintAdjustmentMode:)]) {
+      for (UIView *subview in strongSelf->_inView.window.subviews) {
+        if (subview != strongSelf->_backgroundView) {
           [subview setTintAdjustmentMode:UIViewTintAdjustmentModeDimmed];
         }
       }
@@ -2447,11 +2449,13 @@ static WYPopoverTheme *defaultTheme_ = nil;
   __weak __typeof__(self) weakSelf = self;
 
 
-  void (^adjustTintAutomatic)() = ^() {
+  void (^adjustTintAutomatic)(void) = ^() {
 #ifdef WY_BASE_SDK_7_ENABLED
-    if ([_inView.window respondsToSelector:@selector(setTintAdjustmentMode:)]) {
-      for (UIView *subview in _inView.window.subviews) {
-        if (subview != _backgroundView) {
+	__typeof__(self) strongSelf = weakSelf;
+
+    if ([strongSelf->_inView.window respondsToSelector:@selector(setTintAdjustmentMode:)]) {
+      for (UIView *subview in strongSelf->_inView.window.subviews) {
+        if (subview != strongSelf->_backgroundView) {
           [subview setTintAdjustmentMode:UIViewTintAdjustmentModeAutomatic];
         }
       }
@@ -2459,7 +2463,7 @@ static WYPopoverTheme *defaultTheme_ = nil;
 #endif
   };
 
-  void (^completionBlock)() = ^() {
+  void (^completionBlock)(void) = ^() {
     __typeof__(self) strongSelf = weakSelf;
 
     if (strongSelf) {
