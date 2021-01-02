@@ -1536,8 +1536,10 @@ static WYPopoverTheme *defaultTheme_ = nil;
   return defaultTheme_;
 }
 
-+ (void)load {
-  [WYPopoverController setDefaultTheme:[WYPopoverTheme theme]];
++ (void)initialize {
+	if (self == [WYPopoverController class]) {
+		[WYPopoverController setDefaultTheme:[WYPopoverTheme theme]];
+	}
 }
 
 - (id)init {
