@@ -2807,6 +2807,8 @@ __unused static NSString* WYStringFromOrientation(NSInteger orientation) {
   return result;
 }
 
+#ifndef WY_BASE_SDK_8_ENABLED
+
 static float WYStatusBarHeight() {
   if (compileUsingIOS8SDK() && [[NSProcessInfo processInfo] respondsToSelector:@selector(operatingSystemVersion)]) {
     CGRect statusBarFrame = [[UIApplication sharedApplication] statusBarFrame];
@@ -2825,6 +2827,8 @@ static float WYStatusBarHeight() {
     return statusBarHeight;
   }
 }
+
+#endif
 
 static float WYInterfaceOrientationAngleOfOrientation(UIInterfaceOrientation orientation) {
   float angle;
