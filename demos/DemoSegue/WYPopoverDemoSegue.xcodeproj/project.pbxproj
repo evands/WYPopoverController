@@ -278,12 +278,18 @@
 				CLASSPREFIX = WY;
 				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = "Nicolas CHENG";
+				TargetAttributes = {
+					97B3CB3917CDE8E50005E1A1 = {
+						DevelopmentTeam = BXN2WS3GLG;
+					};
+				};
 			};
 			buildConfigurationList = 97B3CB3517CDE8E50005E1A1 /* Build configuration list for PBXProject "WYPopoverDemoSegue" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = 97B3CB3117CDE8E50005E1A1;
@@ -440,10 +446,11 @@
 		97B3CB6117CDE8E50005E1A1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEVELOPMENT_TEAM = BXN2WS3GLG;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "WYPopoverDemoSegue/WYPopoverDemoSegue-Prefix.pch";
 				INFOPLIST_FILE = "WYPopoverDemoSegue/WYPopoverDemoSegue-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
@@ -453,10 +460,11 @@
 		97B3CB6217CDE8E50005E1A1 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEVELOPMENT_TEAM = BXN2WS3GLG;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "WYPopoverDemoSegue/WYPopoverDemoSegue-Prefix.pch";
 				INFOPLIST_FILE = "WYPopoverDemoSegue/WYPopoverDemoSegue-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;

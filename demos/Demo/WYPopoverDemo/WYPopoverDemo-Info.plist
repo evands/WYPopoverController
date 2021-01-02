@@ -9,7 +9,7 @@
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIdentifier</key>
-	<string>fr.whyers.${PRODUCT_NAME:rfc1034identifier}</string>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -26,6 +26,8 @@
 	<true/>
 	<key>NSMainNibFile~ipad</key>
 	<string>WYStoryboard-iPad</string>
+	<key>UILaunchStoryboardName</key>
+	<string>WYStoryboard</string>
 	<key>UIMainStoryboardFile</key>
 	<string>WYStoryboard</string>
 	<key>UIRequiredDeviceCapabilities</key>
