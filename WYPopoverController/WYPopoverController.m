@@ -1550,10 +1550,6 @@ static WYPopoverTheme *defaultTheme_ = nil;
     _animationDuration = WY_POPOVER_DEFAULT_ANIMATION_DURATION;
 
     themeUpdatesEnabled = NO;
-<<<<<<< HEAD
-
-=======
->>>>>>> caba7157c67cec7bf91bdc87537ec6206d5a4c2c
     themeIsUpdating = YES;
 
     WYPopoverBackgroundView *appearance = [WYPopoverBackgroundView appearance];
@@ -1584,14 +1580,7 @@ static WYPopoverTheme *defaultTheme_ = nil;
     theme.viewContentInsets = appearance.viewContentInsets;
     theme.overlayColor = appearance.overlayColor;
     theme.preferredAlpha = appearance.preferredAlpha;
-<<<<<<< HEAD
     self.theme = theme;
-=======
-    
-    _theme = theme;
-      
-    [self registerTheme];
->>>>>>> caba7157c67cec7bf91bdc87537ec6206d5a4c2c
 
     themeIsUpdating = NO;
     themeUpdatesEnabled = YES;
