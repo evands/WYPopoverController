@@ -1,11 +1,11 @@
 Pod::Spec.new do |s|
   s.name         = 'WYPopoverController'
-  s.version      = '0.3.10'
+  s.version      = '0.3.11'
   s.summary      = 'An iOS Popover for iPhone and iPad. Very customizable.'
   s.description  = <<-DESC
                     WYPopoverController is for the presentation of content in popover on iPhone / iPad devices. Very customizable.
                    DESC
-  s.homepage     = 'https://github.com/sammcewan/WYPopoverController'
+  s.homepage     = 'https://github.com/evands/WYPopoverController'
   s.license      = { :type => 'MIT', :file => 'LICENSE' }
   s.authors      = { 'Nicolas CHENG' => 'nicolas.cheng.dev@gmail.com', 'Sam McEwan' => 'me@sammcewan.co.nz', 'Vitaly Samoylik' => 'vitalys@gmail.com', 'Thomas Bechtum' => 'thomas.bechtum@unibz.it' }
 
