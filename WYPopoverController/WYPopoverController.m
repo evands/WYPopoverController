@@ -27,14 +27,6 @@
 
 #import <objc/runtime.h>
 
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000
-#define WY_BASE_SDK_7_ENABLED
-#endif
-
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 80000
-#define WY_BASE_SDK_8_ENABLED
-#endif
-
 #ifdef DEBUG
 #define WY_LOG(fmt, ...)		NSLog((@"%s (%d) : " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
 #else
@@ -233,11 +225,9 @@ static char const * const UINavigationControllerEmbedInPopoverTagKey = "UINaviga
   }
 #pragma clang diagnostic pop
 
-#ifdef WY_BASE_SDK_7_ENABLED
   if ([aViewController respondsToSelector:@selector(preferredContentSize)]) {
     result = aViewController.preferredContentSize;
   }
-#endif
 
   return result;
 }
@@ -248,22 +238,16 @@ static char const * const UINavigationControllerEmbedInPopoverTagKey = "UINaviga
   [self setContentSizeForViewInPopover:aContentSize];
 #pragma clang diagnostic pop
 
-#ifdef WY_BASE_SDK_7_ENABLED
   if ([self respondsToSelector:@selector(setPreferredContentSize:)]) {
     [self setPreferredContentSize:aContentSize];
   }
-#endif
 }
 
 - (void)sizzled_pushViewController:(UIViewController *)aViewController animated:(BOOL)aAnimated {
   if (self.wy_isEmbedInPopover) {
-#ifdef WY_BASE_SDK_7_ENABLED
-    if ([aViewController respondsToSelector:@selector(setEdgesForExtendedLayout:)]) {
-      aViewController.edgesForExtendedLayout = UIRectEdgeNone;
-    }
-#endif
-    CGSize contentSize = [self contentSize:aViewController];
-    [self setContentSize:contentSize];
+	  aViewController.edgesForExtendedLayout = UIRectEdgeNone;
+	  CGSize contentSize = [self contentSize:aViewController];
+	  [self setContentSize:contentSize];
   }
 
   [self sizzled_pushViewController:aViewController animated:aAnimated];
@@ -277,15 +261,11 @@ static char const * const UINavigationControllerEmbedInPopoverTagKey = "UINaviga
 - (void)sizzled_setViewControllers:(NSArray *)aViewControllers animated:(BOOL)aAnimated {
   NSUInteger count = [aViewControllers count];
 
-#ifdef WY_BASE_SDK_7_ENABLED
   if (self.wy_isEmbedInPopover && count > 0) {
     for (UIViewController *viewController in aViewControllers) {
-      if ([viewController respondsToSelector:@selector(setEdgesForExtendedLayout:)]) {
-        viewController.edgesForExtendedLayout = UIRectEdgeNone;
-      }
+	  viewController.edgesForExtendedLayout = UIRectEdgeNone;
     }
   }
-#endif
 
   [self sizzled_setViewControllers:aViewControllers animated:aAnimated];
 
@@ -317,14 +297,12 @@ static char const * const UINavigationControllerEmbedInPopoverTagKey = "UINaviga
   method_exchangeImplementations(original, swizzle);
 #pragma clang diagnostic pop
 
-#ifdef WY_BASE_SDK_7_ENABLED
   original = class_getInstanceMethod(self, @selector(setPreferredContentSize:));
   swizzle = class_getInstanceMethod(self, @selector(sizzled_setPreferredContentSize:));
 
   if (original != NULL) {
     method_exchangeImplementations(original, swizzle);
   }
-#endif
 }
 
 - (void)sizzled_setContentSizeForViewInPopover:(CGSize)aSize {
@@ -343,13 +321,11 @@ static char const * const UINavigationControllerEmbedInPopoverTagKey = "UINaviga
 
   if ([self isKindOfClass:[UINavigationController class]] == NO && self.navigationController != nil)
   {
-#ifdef WY_BASE_SDK_7_ENABLED
     if ([self.navigationController wy_isEmbedInPopover] == NO) {
       return;
     } else if ([self respondsToSelector:@selector(setPreferredContentSize:)]) {
       [self.navigationController setPreferredContentSize:aSize];
     }
-#endif
   }
 }
 
@@ -1709,11 +1685,7 @@ static WYPopoverTheme *defaultTheme_ = nil;
     topViewController = [navigationController topViewController];
   }
 
-#ifdef WY_BASE_SDK_7_ENABLED
-  if ([topViewController respondsToSelector:@selector(preferredContentSize)]) {
-    result = topViewController.preferredContentSize;
-  }
-#endif
+  result = topViewController.preferredContentSize;
 
   if (CGSizeEqualToSize(result, CGSizeZero)) {
 #pragma clang diagnostic push
@@ -1881,7 +1853,6 @@ static WYPopoverTheme *defaultTheme_ = nil;
   };
 
   void (^adjustTintDimmed)(void) = ^() {
-#ifdef WY_BASE_SDK_7_ENABLED
 	  __typeof__(self) strongSelf = weakSelf;
 
     if (strongSelf->_backgroundView.dimsBackgroundViewsTintColor && [strongSelf->_inView.window respondsToSelector:@selector(setTintAdjustmentMode:)]) {
@@ -1891,7 +1862,6 @@ static WYPopoverTheme *defaultTheme_ = nil;
         }
       }
     }
-#endif
   };
 
   _backgroundView.hidden = NO;
@@ -2071,12 +2041,8 @@ static WYPopoverTheme *defaultTheme_ = nil;
     UINavigationController *navigationController = (UINavigationController *)_viewController;
     navigationController.wy_embedInPopover = YES;
 
-#ifdef WY_BASE_SDK_7_ENABLED
-    if ([navigationController respondsToSelector:@selector(setEdgesForExtendedLayout:)]) {
-      UIViewController *topViewController = [navigationController topViewController];
-      [topViewController setEdgesForExtendedLayout:UIRectEdgeNone];
-    }
-#endif
+	UIViewController *topViewController = [navigationController topViewController];
+	[topViewController setEdgesForExtendedLayout:UIRectEdgeNone];
 
     if (_wantsDefaultContentAppearance == NO) {
       [navigationController.navigationBar setBackgroundImage:[UIImage wy_imageWithColor:[UIColor clearColor]] forBarMetrics:UIBarMetricsDefault];
@@ -2105,6 +2071,7 @@ static WYPopoverTheme *defaultTheme_ = nil;
   float overlayHeight;
 
   float keyboardHeight;
+  float keyboardHeightNegationFactor = 0;
 
   if (_ignoreOrientation) {
     overlayWidth = _overlayView.window.frame.size.width;
@@ -2123,7 +2090,7 @@ static WYPopoverTheme *defaultTheme_ = nil;
     BOOL shouldIgnore = [_delegate popoverControllerShouldIgnoreKeyboardBounds:self];
 
     if (shouldIgnore) {
-      keyboardHeight = 0;
+		keyboardHeightNegationFactor = keyboardHeight;
     }
   }
 
@@ -2163,7 +2130,7 @@ static WYPopoverTheme *defaultTheme_ = nil;
   maxX += _backgroundView.outerShadowInsets.right;
   minY -= _backgroundView.outerShadowInsets.top;
   maxY += _backgroundView.outerShadowInsets.bottom;
-
+	
   if (arrowDirection == WYPopoverArrowDirectionDown) {
     _backgroundView.arrowDirection = WYPopoverArrowDirectionDown;
     containerViewSize = [_backgroundView sizeThatFits:contentViewSize];
@@ -2450,7 +2417,6 @@ static WYPopoverTheme *defaultTheme_ = nil;
 
 
   void (^adjustTintAutomatic)(void) = ^() {
-#ifdef WY_BASE_SDK_7_ENABLED
 	__typeof__(self) strongSelf = weakSelf;
 
     if ([strongSelf->_inView.window respondsToSelector:@selector(setTintAdjustmentMode:)]) {
@@ -2460,7 +2426,6 @@ static WYPopoverTheme *defaultTheme_ = nil;
         }
       }
     }
-#endif
   };
 
   void (^completionBlock)(void) = ^() {
@@ -2718,6 +2683,7 @@ static WYPopoverTheme *defaultTheme_ = nil;
   float minX, maxX, minY, maxY = 0;
 
   float keyboardHeight = WYKeyboardListener.rect.size.height;
+  float keyboardHeightNegationFactor = 0;
   float overlayWidth = _overlayView.bounds.size.width;
   float overlayHeight = _overlayView.bounds.size.height;
   
@@ -2806,29 +2772,6 @@ __unused static NSString* WYStringFromOrientation(NSInteger orientation) {
 
   return result;
 }
-
-#ifndef WY_BASE_SDK_8_ENABLED
-
-static float WYStatusBarHeight() {
-  if (compileUsingIOS8SDK() && [[NSProcessInfo processInfo] respondsToSelector:@selector(operatingSystemVersion)]) {
-    CGRect statusBarFrame = [[UIApplication sharedApplication] statusBarFrame];
-    return statusBarFrame.size.height;
-  } else {
-    UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
-    float statusBarHeight = 0;
-    CGRect statusBarFrame = [[UIApplication sharedApplication] statusBarFrame];
-    statusBarHeight = statusBarFrame.size.height;
-
-    if (UIInterfaceOrientationIsLandscape(orientation))
-    {
-      statusBarHeight = statusBarFrame.size.width;
-    }
-
-    return statusBarHeight;
-  }
-}
-
-#endif
 
 static float WYInterfaceOrientationAngleOfOrientation(UIInterfaceOrientation orientation) {
   float angle;
