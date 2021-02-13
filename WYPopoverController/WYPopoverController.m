@@ -2103,17 +2103,11 @@ static WYPopoverTheme *defaultTheme_ = nil;
 
   viewFrame = WYRectInWindowBounds(viewFrame, orientation);
 
-#ifdef WY_BASE_SDK_8_ENABLED
   minX = MAX(_popoverLayoutMargins.left, _inView.layoutMargins.left);
   maxX = overlayWidth - MAX(_popoverLayoutMargins.right, _inView.layoutMargins.right);
   minY = MAX(_popoverLayoutMargins.top, _inView.layoutMargins.top);
-  maxY = overlayHeight - MAX(_popoverLayoutMargins.bottom, _inView.layoutMargins.bottom) - keyboardHeight;
-#else
-  minX = _popoverLayoutMargins.left;
-  maxX = overlayWidth - _popoverLayoutMargins.right;
-  minY = WYStatusBarHeight() + _popoverLayoutMargins.top;
-  maxY = overlayHeight - _popoverLayoutMargins.bottom - keyboardHeight;
-#endif
+  //layoutMargins includes the keyboard, if visible; keyboardHeightNegationFactor is 0 unless delegate returns YES for popoverControllerShouldIgnoreKeyboardBounds
+  maxY = overlayHeight - MAX(_popoverLayoutMargins.bottom, _inView.layoutMargins.bottom) + keyboardHeightNegationFactor;
 
   // Which direction ?
   //
@@ -2697,21 +2691,15 @@ static WYPopoverTheme *defaultTheme_ = nil;
     BOOL shouldIgnore = [_delegate popoverControllerShouldIgnoreKeyboardBounds:self];
 
     if (shouldIgnore) {
-      keyboardHeight = 0;
+		keyboardHeightNegationFactor = keyboardHeight;
     }
   }
 
-#ifdef WY_BASE_SDK_8_ENABLED
   minX = MAX(_popoverLayoutMargins.left, _inView.layoutMargins.left);
   maxX = overlayWidth - MAX(_popoverLayoutMargins.right, _inView.layoutMargins.right);
   minY = MAX(_popoverLayoutMargins.top, _inView.layoutMargins.top);
-  maxY = overlayHeight - MAX(_popoverLayoutMargins.bottom, _inView.layoutMargins.bottom) - keyboardHeight;
-#else
-  minX = _popoverLayoutMargins.left;
-  maxX = overlayWidth - _popoverLayoutMargins.right;
-  minY = WYStatusBarHeight() + _popoverLayoutMargins.top;
-  maxY = overlayHeight - _popoverLayoutMargins.bottom - keyboardHeight;
-#endif
+  //layoutMargins includes the keyboard, if visible; keyboardHeightNegationFactor is 0 unless delegate returns YES for popoverControllerShouldIgnoreKeyboardBounds
+  maxY = overlayHeight - MAX(_popoverLayoutMargins.bottom, _inView.layoutMargins.bottom) + keyboardHeightNegationFactor;
 
   CGSize result = CGSizeZero;
 
